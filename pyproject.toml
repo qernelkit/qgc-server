@@ -25,11 +25,10 @@ dependencies = [
     "httpx>=0.26.0",
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
 dev = [
     "pytest>=7.4.0",
     "pytest-asyncio>=0.23.0",
-    "httpx>=0.26.0",
 ]
 
 [project.scripts]
