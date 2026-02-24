@@ -1,0 +1,20 @@
+{
+  "name": "adder-4q",
+  "version": "1.0.0",
+  "ir": "openqasm2",
+  "interface": {
+    "input_qubits": 4,
+    "output_qubits": 4,
+    "classical_bits": 4
+  },
+  "depends_on": [],
+  "metrics_hints": {
+    "t_count": 8,
+    "depth": 14
+  },
+  "hashes": {
+    "sha256": ""
+  },
+  "description": "4-qubit quantum adder circuit from FTCircuitBench",
+  "tags": ["adder", "arithmetic", "ftcircuitbench"]
+}

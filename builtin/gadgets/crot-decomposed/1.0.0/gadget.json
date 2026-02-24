@@ -1,0 +1,21 @@
+{
+  "name": "crot-decomposed",
+  "version": "1.0.0",
+  "ir": "openqasm3",
+  "interface": {
+    "input_qubits": 2,
+    "output_qubits": 2,
+    "classical_bits": 0
+  },
+  "depends_on": [],
+  "metrics_hints": {
+    "t_count": 2,
+    "cnot_count": 4,
+    "depth": 5
+  },
+  "hashes": {
+    "sha256": "0287b300bcfe4d853d2fd61f811f7c2b16bdd4dc3aaa25397fc937f7555f96f3"
+  },
+  "description": "Controlled rotation decomposition into CNOT and single-qubit gates",
+  "tags": ["decomposition", "rotation", "controlled"]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "ghz-state",
+  "version": "1.0.0",
+  "ir": "openqasm3",
+  "interface": {
+    "input_qubits": 3,
+    "output_qubits": 3,
+    "classical_bits": 0
+  },
+  "depends_on": [],
+  "metrics_hints": {
+    "t_count": 0,
+    "cnot_count": 2,
+    "depth": 3
+  },
+  "hashes": {
+    "sha256": "2816ea334cef819764472a24bd93c9a5adb44cb4eb04ebe1913e721070a70e86"
+  },
+  "description": "Create a GHZ state |00...0> + |11...1> across n qubits",
+  "tags": ["entanglement", "multi-qubit"]
+}

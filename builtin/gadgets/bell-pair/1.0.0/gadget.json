@@ -1,0 +1,21 @@
+{
+  "name": "bell-pair",
+  "version": "1.0.0",
+  "ir": "openqasm3",
+  "interface": {
+    "input_qubits": 2,
+    "output_qubits": 2,
+    "classical_bits": 0
+  },
+  "depends_on": [],
+  "metrics_hints": {
+    "t_count": 0,
+    "cnot_count": 1,
+    "depth": 2
+  },
+  "hashes": {
+    "sha256": "5cd47d2867d3223d6387971ab6be59a7af291e9b50e6b83a639fb206bc270325"
+  },
+  "description": "Create an entangled Bell pair |00> + |11>",
+  "tags": ["entanglement", "basic"]
+}

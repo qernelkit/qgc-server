@@ -1,0 +1,17 @@
+{
+  "name": "qft-18q",
+  "version": "1.0.0",
+  "ir": "openqasm2",
+  "interface": {
+    "input_qubits": 18,
+    "output_qubits": 18,
+    "classical_bits": 18
+  },
+  "depends_on": [],
+  "metrics_hints": {},
+  "hashes": {
+    "sha256": ""
+  },
+  "description": "18-qubit Quantum Fourier Transform from FTCircuitBench",
+  "tags": ["qft", "transform", "ftcircuitbench"]
+}

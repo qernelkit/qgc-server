@@ -1,0 +1,17 @@
+{
+  "name": "adder-10q",
+  "version": "1.0.0",
+  "ir": "openqasm2",
+  "interface": {
+    "input_qubits": 10,
+    "output_qubits": 10,
+    "classical_bits": 5
+  },
+  "depends_on": [],
+  "metrics_hints": {},
+  "hashes": {
+    "sha256": ""
+  },
+  "description": "10-qubit ripple-carry adder from Cuccaro et al (quant-ph/0410184), via FTCircuitBench",
+  "tags": ["adder", "arithmetic", "ripple-carry", "ftcircuitbench"]
+}

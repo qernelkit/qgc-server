@@ -1,0 +1,21 @@
+{
+  "name": "qpe-iterative",
+  "version": "1.0.0",
+  "ir": "openqasm3",
+  "interface": {
+    "input_qubits": 2,
+    "output_qubits": 2,
+    "classical_bits": 1
+  },
+  "depends_on": [],
+  "metrics_hints": {
+    "t_count": 0,
+    "cnot_count": 1,
+    "depth": 3
+  },
+  "hashes": {
+    "sha256": "b21264b42c483bcedd608b636f79256d94f0636e96fe8c17791f2bb304697ba9"
+  },
+  "description": "Iterative Quantum Phase Estimation for efficient eigenvalue estimation",
+  "tags": ["phase", "estimation", "iterative"]
+}
