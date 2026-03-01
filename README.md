@@ -5,9 +5,11 @@
 [![Supported By Unitary Foundation](https://img.shields.io/badge/Supported%20By-Unitary%20Foundation-FFFF00.svg)](https://unitary.foundation)
 [![Apache 2.0 License](https://img.shields.io/badge/License-Apache%202.0-3c60b1.svg?logo=opensourceinitiative&logoColor=white&style=flat-square)](https://github.com/qernelkit/qgc-server/blob/main/LICENSE)
 
+![QGC Server in Claude](.github/qgcserverss.png)
+
 A versioned registry and compiler for quantum circuit gadgets, best used in tandem with large language models for the rapid prototyping of quantum circuits from literature and math. Store, search, compose, and analyze reusable OpenQASM 3 building blocks, from Bell pairs to multi-qubit adders, directly from an AI assistant via MCP or through a REST API.
 
-A publicly hosted and maintained registry server is available at [qgc.sh](https://qgc.sh).
+A publicly hosted and maintained registry server is available at [qgc.sh](https://qgc.sh). An example usage of the MCP server in Claude can be found [here](https://claude.ai/share/841d6a36-c58e-4e73-a25a-71386e39c7ed).
 
 ## What is QGC?
 
