@@ -4,7 +4,7 @@ version = "0.0.1"
 description = "Server architecture for qgc"
 readme = "README.md"
 license = "Apache-2.0"
-requires-python = ">=3.10"
+requires-python = ">=3.10,<3.14"
 authors = []
 keywords = ["quantum", "circuit", "gadget", "registry", "qgc"]
 classifiers = [

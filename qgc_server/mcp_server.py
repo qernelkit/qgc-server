@@ -695,7 +695,7 @@ def _detect_gaps(paper_text: str, matched_gadget_names: set[str]) -> list[dict]:
 
 
 def _parse_content_list(content_list_path: Path) -> dict:
-    """Parse a MineRU _content_list.json and extract tables, figures, and equations.
+    """Parse a MinerU _content_list.json and extract tables, figures, and equations.
 
     Returns a dict with:
       - tables: list of {page, caption, html, img_path}
@@ -842,7 +842,7 @@ async def _download_pdf(url: str, dest: Path) -> Optional[str]:
     return None
 
 
-# Track background MineRU jobs: stem → {"process": Popen, "pdf": str, "source": str}
+# Track background MinerU jobs: stem → {"process": Popen, "pdf": str, "source": str}
 _extraction_jobs: dict[str, dict] = {}
 
 
@@ -852,7 +852,7 @@ def _resolve_pdf_stem(pdf_path: str) -> str:
 
 
 def _start_mineru_background(pdf_path: str, output_dir: Path) -> subprocess.Popen:
-    """Start MineRU as a background process."""
+    """Start MinerU as a background process."""
     log_file = output_dir / "_mineru.log"
     log_handle = open(log_file, "w")
     proc = subprocess.Popen(
@@ -865,20 +865,20 @@ def _start_mineru_background(pdf_path: str, output_dir: Path) -> subprocess.Pope
 
 @mcp.tool()
 async def extract_paper(pdf_path: str = "", url: str = "") -> str:
-    """Extract content from a quantum computing paper (PDF) using MineRU.
+    """Extract content from a quantum computing paper (PDF) using MinerU.
 
     Accepts either a local file path or a URL. If a URL is provided, the PDF
     is downloaded first (the MCP server has network access even when the
     calling environment does not).
 
-    MineRU extraction is **non-blocking**: it starts in the background and
+    MinerU extraction is **non-blocking**: it starts in the background and
     returns immediately. Call this tool again with the same arguments to check
     if extraction is complete. Once done, returns the full parsed content.
 
     ## Lifecycle
 
-    1. First call → downloads PDF (if URL), starts MineRU, returns "extraction started"
-    2. Subsequent calls → checks if MineRU finished:
+    1. First call → downloads PDF (if URL), starts MinerU, returns "extraction started"
+    2. Subsequent calls → checks if MinerU finished:
        - Still running → returns progress status
        - Done → returns full markdown + tables + images
     3. Already cached → returns results instantly (no re-extraction)
@@ -958,7 +958,7 @@ async def extract_paper(pdf_path: str = "", url: str = "") -> str:
                 except OSError:
                     pass
             return (
-                f"MineRU extraction is **in progress** for `{stem}`.\n\n"
+                f"MinerU extraction is **in progress** for `{stem}`.\n\n"
                 f"Call `extract_paper` again with the same arguments to check status.\n\n"
                 f"**Recent log output**:\n```\n{log_tail or '(no output yet)'}\n```"
             )
@@ -975,7 +975,7 @@ async def extract_paper(pdf_path: str = "", url: str = "") -> str:
                 except OSError:
                     pass
             return (
-                f"MineRU extraction **failed** (exit code {rc}).\n\n"
+                f"MinerU extraction **failed** (exit code {rc}).\n\n"
                 f"**Log**:\n```\n{log_content or '(no log)'}\n```"
             )
 
@@ -990,7 +990,7 @@ async def extract_paper(pdf_path: str = "", url: str = "") -> str:
             return _build_extraction_result(stem, source_label, output_dir, auto_dir, md_path)
 
         return (
-            f"MineRU completed but no markdown file found.\n"
+            f"MinerU completed but no markdown file found.\n"
             f"Output directory: `{output_dir}`"
         )
 
@@ -999,7 +999,7 @@ async def extract_paper(pdf_path: str = "", url: str = "") -> str:
     # Check that mineru CLI is on PATH (instant check, no subprocess)
     if shutil.which("mineru") is None:
         return (
-            "MineRU is not installed (not found on PATH). To install it:\n\n"
+            "MinerU is not installed (not found on PATH). To install it:\n\n"
             "```bash\n"
             "uv pip install 'mineru[all]'\n"
             "```\n\n"
@@ -1007,7 +1007,7 @@ async def extract_paper(pdf_path: str = "", url: str = "") -> str:
             "```bash\n"
             "cd qgc_server && uv sync\n"
             "```\n\n"
-            "Note: MineRU includes PyTorch and ML model dependencies (~2GB download)."
+            "Note: MinerU includes PyTorch and ML model dependencies (~2GB download)."
         )
 
     # Create output directory and start background extraction
@@ -1021,11 +1021,11 @@ async def extract_paper(pdf_path: str = "", url: str = "") -> str:
     }
 
     return (
-        f"MineRU extraction **started** for `{stem}`.\n\n"
+        f"MinerU extraction **started** for `{stem}`.\n\n"
         f"- PDF: `{pdf_path}`\n"
         f"- Output dir: `{output_dir}`\n"
         f"- PID: {proc.pid}\n\n"
-        f"MineRU loads PyTorch + ML models, so first extraction may take 2-5 minutes.\n"
+        f"MinerU loads PyTorch + ML models, so first extraction may take 2-5 minutes.\n"
         f"**Call `extract_paper` again with the same arguments to check progress and get results.**"
     )
 
@@ -1040,8 +1040,8 @@ def analyze_paper_for_gadgets(paper_text: str = "", paper_path: str = "") -> str
     (gaps).
 
     Provide either paper_text directly or paper_path pointing to:
-    - A MineRU-extracted .md file
-    - A MineRU auto/ output directory (will read .md + _content_list.json)
+    - A MinerU-extracted .md file
+    - A MinerU auto/ output directory (will read .md + _content_list.json)
     - Just the paper stem name (will look in /tmp/qgc_papers/<stem>/)
 
     Args:
@@ -1084,7 +1084,7 @@ def analyze_paper_for_gadgets(paper_text: str = "", paper_path: str = "") -> str
     if not paper_text:
         return (
             "No paper content provided. Either pass paper_text directly, "
-            "or provide paper_path pointing to a MineRU-extracted .md file "
+            "or provide paper_path pointing to a MinerU-extracted .md file "
             "or auto/ output directory."
         )
 

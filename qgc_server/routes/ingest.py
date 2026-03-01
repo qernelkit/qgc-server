@@ -14,27 +14,26 @@ Accepts multiple input formats (auto-detected):
    { "blob": { "experiment": "...", "circuit": { "qasm": "OPENQASM 3.0; ..." }, ... } }
    Optionally specify: "qasm_path": "circuit.qasm" (dot-notation)
 
-Uses Ollama Cloud to extract structured manifest from freeform metadata.
+Uses Ollama (local or cloud) to extract structured manifest from freeform metadata.
+Configure via environment variables:
+  QGC_OLLAMA_MODE=local   (default) Use local Ollama at localhost:11434
+  QGC_OLLAMA_MODE=cloud   Use Ollama Cloud (requires QGC_OLLAMA_API_KEY)
+  QGC_OLLAMA_MODE=off     Disable Ollama entirely
 """
 
 import hashlib
 import json
-import os
 import httpx
 from typing import Any, Optional
 
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
 
+from ..config import settings, OllamaMode
 from ..models import Manifest, GadgetInterface, MetricsHints, Hashes
 from ..services.registry import get_registry
 
 router = APIRouter()
-
-# Ollama Cloud config
-OLLAMA_API_URL = os.getenv("OLLAMA_API_URL", "https://ollama.com/api/chat")
-OLLAMA_API_KEY = os.getenv("OLLAMA_API_KEY", "")
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1:8b")
 
 # The target schema for gadget.json v1
 GADGET_SCHEMA = """
@@ -179,17 +178,9 @@ def _remove_nested_key(obj: dict, path: str) -> dict:
     return result
 
 
-async def extract_with_ollama(qasm: str, metadata: dict) -> dict:
-    """Use Ollama Cloud to extract structured manifest from QASM + metadata."""
-    from fastapi import HTTPException
-
-    if not OLLAMA_API_KEY:
-        raise HTTPException(
-            status_code=503,
-            detail="OLLAMA_API_KEY not configured. Set the environment variable to enable AI extraction."
-        )
-
-    prompt = f"""You are a quantum computing expert. Extract structured metadata from the following quantum circuit and freeform metadata.
+def _build_extraction_prompt(qasm: str, metadata: dict) -> str:
+    """Build the prompt for Ollama manifest extraction."""
+    return f"""You are a quantum computing expert. Extract structured metadata from the following quantum circuit and freeform metadata.
 
 ## Target Schema
 {GADGET_SCHEMA}
@@ -212,13 +203,55 @@ async def extract_with_ollama(qasm: str, metadata: dict) -> dict:
 ## Output (JSON only)
 """
 
-    async with httpx.AsyncClient(timeout=30.0) as client:
+
+def _parse_ollama_response(content: str) -> dict:
+    """Parse JSON from an Ollama response, handling markdown code blocks."""
+    if "```json" in content:
+        content = content.split("```json")[1].split("```")[0]
+    elif "```" in content:
+        content = content.split("```")[1].split("```")[0]
+    return json.loads(content.strip())
+
+
+async def extract_with_ollama(qasm: str, metadata: dict) -> dict:
+    """Extract structured manifest from QASM + metadata using Ollama.
+
+    Supports three modes (configured via QGC_OLLAMA_MODE):
+      - local: connects to a local Ollama instance at localhost:11434 (no API key needed)
+      - cloud: connects to Ollama Cloud (requires QGC_OLLAMA_API_KEY)
+      - off: raises an error immediately
+    """
+    from fastapi import HTTPException
+
+    if settings.ollama_mode == OllamaMode.off:
+        raise HTTPException(
+            status_code=503,
+            detail="Ollama is disabled (QGC_OLLAMA_MODE=off)."
+        )
+
+    if settings.ollama_mode == OllamaMode.cloud and not settings.ollama_api_key:
+        raise HTTPException(
+            status_code=503,
+            detail="Ollama Cloud requires QGC_OLLAMA_API_KEY. Set the env variable or use QGC_OLLAMA_MODE=local."
+        )
+
+    # Pick URL and headers based on mode
+    if settings.ollama_mode == OllamaMode.local:
+        api_url = settings.ollama_local_url
+        headers = {}
+    else:
+        api_url = settings.ollama_cloud_url
+        headers = {"Authorization": f"Bearer {settings.ollama_api_key}"}
+
+    prompt = _build_extraction_prompt(qasm, metadata)
+
+    async with httpx.AsyncClient(timeout=60.0) as client:
         try:
             response = await client.post(
-                OLLAMA_API_URL,
-                headers={"Authorization": f"Bearer {OLLAMA_API_KEY}"},
+                api_url,
+                headers=headers,
                 json={
-                    "model": OLLAMA_MODEL,
+                    "model": settings.ollama_model,
                     "messages": [{"role": "user", "content": prompt}],
                     "stream": False,
                 }
@@ -227,21 +260,27 @@ async def extract_with_ollama(qasm: str, metadata: dict) -> dict:
             result = response.json()
 
             content = result.get("message", {}).get("content", "")
+            return _parse_ollama_response(content)
 
-            # Parse JSON from response (handle markdown code blocks)
-            if "```json" in content:
-                content = content.split("```json")[1].split("```")[0]
-            elif "```" in content:
-                content = content.split("```")[1].split("```")[0]
-
-            return json.loads(content.strip())
-
+        except httpx.ConnectError:
+            if settings.ollama_mode == OllamaMode.local:
+                raise HTTPException(
+                    status_code=503,
+                    detail=(
+                        f"Cannot connect to local Ollama at {settings.ollama_local_url}. "
+                        "Make sure Ollama is running (https://ollama.com) or set QGC_OLLAMA_MODE=cloud."
+                    )
+                )
+            raise HTTPException(
+                status_code=503,
+                detail=f"Cannot connect to Ollama Cloud at {settings.ollama_cloud_url}."
+            )
         except HTTPException:
             raise
         except Exception as e:
             raise HTTPException(
                 status_code=502,
-                detail=f"Ollama extraction failed: {e}"
+                detail=f"Ollama extraction failed ({settings.ollama_mode.value} mode): {e}"
             )
 
 
