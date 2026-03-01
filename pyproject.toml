@@ -23,6 +23,7 @@ dependencies = [
     "pydantic>=2.5.0",
     "pydantic-settings>=2.1.0",
     "httpx>=0.26.0",
+    "mcp[cli]>=1.2.0",
 ]
 
 [dependency-groups]
@@ -33,6 +34,7 @@ dev = [
 
 [project.scripts]
 qgc-server = "qgc_server.main:run"
+qgc-mcp = "qgc_server.mcp_server:main"
 
 [build-system]
 requires = ["hatchling"]
