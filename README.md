@@ -205,6 +205,8 @@ MinerU loads PyTorch and ML models on startup. First extraction may take 2-5 min
 
 Contributions are more than welcome. We ask that you prioritize features that don't compete with LLMs, but make them more efficient. Build tools the AI can use, not tools that replace what it already does well.
 
+Use of AI tools to generate code is welcome, as long as it's well intentioned.
+
 ### Development
 
 ```bash
@@ -217,6 +219,6 @@ Configuration uses environment variables with a `QGC_` prefix (see `qgc_server/c
 
 ## Projects that inspired this initiative
 
-- [AlphaTensor-Quantum](https://www.nature.com/articles/s42256-025-01001-1): AI-discovered circuits for faster quantum computation, from DeepMind
-- [Stim](https://github.com/quantumlib/Stim): fast simulator for quantum error correction, useful for building and testing stabilizer codes
-- [TQEC](https://github.com/tqec/tqec): open source design tools for topological quantum error correcting codes
+- [AlphaTensor-Quantum](https://www.nature.com/articles/s42256-025-01001-1), AI-discovered circuits for faster quantum computation, from DeepMind
+- [Stim](https://github.com/quantumlib/Stim), fast simulator for quantum error correction, useful for building and testing stabilizer codes
+- [TQEC](https://github.com/tqec/tqec), open source design tools for topological quantum error correcting codes
