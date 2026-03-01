@@ -7,7 +7,7 @@
 
 A versioned registry and compiler for quantum circuit gadgets, best used in tandem with large language models for the rapid prototyping of quantum circuits from literature and math. Store, search, compose, and analyze reusable OpenQASM 3 building blocks, from Bell pairs to multi-qubit adders, directly from an AI assistant via MCP or through a REST API.
 
-A public registry server is available at [qgc.sh](https://qgc.sh).
+A publicly hosted and maintained registry server is available at [qgc.sh](https://qgc.sh).
 
 ## What is QGC?
 
@@ -162,7 +162,7 @@ ollama serve
 ollama pull qwen3-coder-next
 ```
 
-That's it. The server defaults to `QGC_OLLAMA_MODE=local` and will connect to `localhost:11434` with no API key needed. When you `POST /ingest` with QASM, Ollama analyzes the circuit and builds the manifest.
+The server defaults to `QGC_OLLAMA_MODE=local` and will connect to `localhost:11434` with no API key needed. When you `POST /ingest` with QASM, Ollama analyzes the circuit and builds the manifest.
 
 ### Ollama Cloud
 
@@ -210,7 +210,7 @@ MinerU loads PyTorch and ML models on startup. First extraction may take 2-5 min
 
 ## Contributing
 
-Contributions are more than welcome. We ask that you prioritize features that don't compete with LLMs, but make them more efficient. Build tools the AI can use, not tools that replace what it already does well.
+Contributions are more than welcome. Please prioritize features that don't compete with LLMs, but make them more efficient. Build tools the AI can use, not tools that replace what it already does well.
 
 Use of AI tools to generate code is welcome, as long as it's well intentioned.
 
