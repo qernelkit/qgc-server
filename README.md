@@ -1,5 +1,10 @@
 # qgc-server
 
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10+-6828b2.svg?style=flat-square&logo=python&logoColor=white)](https://www.python.org/downloads/)
+[![CI](https://github.com/qernelkit/qgc-server/actions/workflows/ci.yml/badge.svg)](https://github.com/qernelkit/qgc-server/actions/workflows/ci.yml)
+[![Supported By Unitary Foundation](https://img.shields.io/badge/Supported%20By-Unitary%20Foundation-FFFF00.svg)](https://unitary.foundation)
+[![Apache 2.0 License](https://img.shields.io/badge/License-Apache%202.0-3c60b1.svg?logo=opensourceinitiative&logoColor=white&style=flat-square)](https://github.com/qernelkit/qgc-server/blob/main/LICENSE)
+
 A versioned registry and compiler for quantum circuit gadgets. Store, search, compose, and analyze reusable OpenQASM 3 building blocks, from Bell pairs to multi-qubit adders, through a REST API or directly from an AI assistant via MCP.
 
 ## What is QGC?
