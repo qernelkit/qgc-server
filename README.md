@@ -70,7 +70,7 @@ qubit[4] q;
 
 ## Getting Started
 
-You need [uv](https://docs.astral.sh/uv/) as your Python package manager.
+QGC uses [uv](https://docs.astral.sh/uv/) as its main package manager.
 
 ```bash
 cd qgc_server
@@ -130,7 +130,7 @@ Restart Claude Desktop. The QGC tools will appear in the tool list.
 
 You can have a conversation like:
 
-> **You:** "Extract this paper and tell me which parts I can build with QGC gadgets"
+> "Extract this paper and tell me which parts I can build with QGC gadgets"
 > `https://arxiv.org/pdf/2511.18377`
 
 Claude will:
