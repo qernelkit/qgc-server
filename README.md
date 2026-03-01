@@ -1,6 +1,15 @@
 # qgc-server
 
-A versioned registry and compiler for quantum circuit gadgets. Store, search, compose, and analyze reusable OpenQASM 3 building blocks, from Bell pairs to multi-qubit adders, through a REST API or directly from an AI assistant via MCP.
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10+-6828b2.svg?style=flat-square&logo=python&logoColor=white)](https://www.python.org/downloads/)
+[![CI](https://github.com/qernelkit/qgc-server/actions/workflows/ci.yml/badge.svg)](https://github.com/qernelkit/qgc-server/actions/workflows/ci.yml)
+[![Supported By Unitary Foundation](https://img.shields.io/badge/Supported%20By-Unitary%20Foundation-FFFF00.svg)](https://unitary.foundation)
+[![Apache 2.0 License](https://img.shields.io/badge/License-Apache%202.0-3c60b1.svg?logo=opensourceinitiative&logoColor=white&style=flat-square)](https://github.com/qernelkit/qgc-server/blob/main/LICENSE)
+
+A versioned registry and compiler for quantum circuit gadgets, best used in tandem with large language models for the rapid prototyping of quantum circuits from literature and math. Store, search, compose, and analyze reusable OpenQASM 3 building blocks, from Bell pairs to multi-qubit adders, directly from an AI assistant via MCP or through a REST API.
+
+A publicly hosted and maintained registry server is available at [qgc.sh](https://qgc.sh). An example usage of the MCP server in Claude can be found [here](https://claude.ai/share/841d6a36-c58e-4e73-a25a-71386e39c7ed).
+
+![QGC Server in Claude](.github/qgcserverss.png)
 
 ## What is QGC?
 
@@ -155,7 +164,7 @@ ollama serve
 ollama pull qwen3-coder-next
 ```
 
-That's it. The server defaults to `QGC_OLLAMA_MODE=local` and will connect to `localhost:11434` with no API key needed. When you `POST /ingest` with QASM, Ollama analyzes the circuit and builds the manifest.
+The server defaults to `QGC_OLLAMA_MODE=local` and will connect to `localhost:11434` with no API key needed. When you `POST /ingest` with QASM, Ollama analyzes the circuit and builds the manifest.
 
 ### Ollama Cloud
 
@@ -203,7 +212,7 @@ MinerU loads PyTorch and ML models on startup. First extraction may take 2-5 min
 
 ## Contributing
 
-Contributions are more than welcome. We ask that you prioritize features that don't compete with LLMs, but make them more efficient. Build tools the AI can use, not tools that replace what it already does well.
+Contributions are more than welcome. Please prioritize features that don't compete with LLMs, but make them more efficient. Build tools the AI can use, not tools that replace what it already does well.
 
 Use of AI tools to generate code is welcome, as long as it's well intentioned.
 
