@@ -228,6 +228,6 @@ Configuration uses environment variables with a `QGC_` prefix (see `qgc_server/c
 
 ## Projects that inspired this initiative
 
-- [AlphaTensor-Quantum](https://www.nature.com/articles/s42256-025-01001-1), AI-discovered circuits for faster quantum computation, from DeepMind
-- [Stim](https://github.com/quantumlib/Stim), fast simulator for quantum error correction, useful for building and testing stabilizer codes
-- [TQEC](https://github.com/tqec/tqec), open source design tools for topological quantum error correcting codes
+- [AlphaTensor-Quantum](https://www.nature.com/articles/s42256-025-01001-1)
+- [Stim](https://github.com/quantumlib/Stim)
+- [TQEC](https://github.com/tqec/tqec)
